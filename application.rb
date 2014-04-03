@@ -34,4 +34,16 @@ class Application < Sinatra::Base
   		@eh = EHPoint.where(experiment: exp).last
   		haml :experiment
   	end
+
+  	get '/experiment/:experiment/data.json' do
+
+  		content_type :json
+  		exp = params[:experiment]
+  		ph_data = PHPoint.where(experiment: exp).order_by(time: "desc")
+  		eh_data = EHPoint.where(experiment: exp).order_by(time: "desc")
+
+  		h = {phdata: ph_data, ehdata: eh_data}.to_json
+
+  		return h
+  	end
   end
