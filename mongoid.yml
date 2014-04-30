@@ -8,9 +8,7 @@ production:
       username: <%= ENV['MONGODB_USER'] %>
       password: <%= ENV['MONGODB_PWD'] %> 
       hosts:
-        - ds043997.mongolab.com:43997
-        - localhost:27017
-        - 143.167.43.173:27017
+        - <%= ENV['MONGODB_SERVER'] %>
       #read_secondary: true
 
       options: 
@@ -25,15 +23,5 @@ production:
         # A value of 30 allows for plenty of time for DNS slowness/network blips. 
         # Note that if you have a long-running query (over 30 seconds), it will timeout.
         # Use Queryable#no_timeout for long queries: http://mongoid.org/en/origin/docs/options.html.
-        timeout: 1 
-    replica_set:
-      database: nanotherics
-      username: phuser
-      password: digdog44
-      hosts:
-        - 143.167.43.173:27017
-    replica_set:
-      database: nanotherics
-      hosts:
-        - localhost:27107
+        timeout: 1
 
