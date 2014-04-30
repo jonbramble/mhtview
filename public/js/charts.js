@@ -56,7 +56,7 @@ function socks(){
 $(document).ready ( function() {
 
  var target = document.getElementById('chart-spinner');
- socks();
+ //socks();
 
 $( "#show-charts" ).bind( "click", function() {
   var exp = $(location).attr('pathname').match(/\/experiment\/(.*)/)[1];
