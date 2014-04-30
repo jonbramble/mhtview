@@ -38,12 +38,25 @@ var opts = {
   left: 'auto' // Left position relative to parent in px
 };
 
+function show(message) {
+      $('p#message').replaceWith(message);
+}
+
+
+function socks(){
+
+        var ws       = new WebSocket('ws://' + window.location.host + window.location.pathname);
+        ws.onopen    = function(m)  { show('websocket opened' +  m.data); };
+        ws.onclose   = function()  { show('websocket closed'); }
+        ws.onmessage = function(m) { show('websocket message: ' +  m.data); };
+}
+
+
 
 $(document).ready ( function() {
 
  var target = document.getElementById('chart-spinner');
- 
-
+ socks();
 
 $( "#show-charts" ).bind( "click", function() {
   var exp = $(location).attr('pathname').match(/\/experiment\/(.*)/)[1];
@@ -51,22 +64,17 @@ $( "#show-charts" ).bind( "click", function() {
 
   var spinner = new Spinner(opts).spin(target);
   
-  var phpoints = new Array();
-  var ehpoints = new Array();
+  var tpoints = new Array();
  
   $.getJSON( url )
    .done(function( jsondata) {
-     $.each ( jsondata.phdata, function(i, point) {
-       var pharr = {x: new Date(point.time), y: parseFloat(point.ph)};
-       phpoints.push(pharr);
+     $.each ( jsondata.tdata, function(i, point) {
+       var tarr = {x: new Date(point.time), y: parseFloat(point.temperature)};
+       tpoints.push(tarr);
      });
-     $.each ( jsondata.ehdata, function(i, point) {
-       var eharr = {x: new Date(point.time), y: parseFloat(point.mv)};
-       ehpoints.push(eharr);
-     });
-    plotchart("phchartContainer","pH trace", phpoints);
-    plotchart("ehchartContainer","eH trace", ehpoints);
 
+    plotchart("tchartContainer","Temperature", tpoints);
+ 
     spinner.stop();
 
    });

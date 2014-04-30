@@ -1,37 +1,31 @@
 require 'sinatra'
+require 'sinatra-websocket'
 require 'mongoid'
 require 'haml'
 
 Mongoid.load!("mongoid.yml",:production)
 
-class PHPoint
+class TPoint
 	include Mongoid::Document
 	field :time
 	field :experiment
-	field :ph
+	field :temperature
 	store_in session: "default"
 end
 
-class EHPoint
-	include Mongoid::Document
-	field :time
-	field :experiment
-	field :mv
-	store_in session: "default"
-end
 
 class Application < Sinatra::Base	
 	set :haml, :format => :html5
+	set :server, 'thin'
+	set :sockets, []
 
 	get '/' do
-		#@data = PHPoint.where(experiment: "TEST0001").last
   		haml :index
   	end
 
   	get '/experiment/:experiment' do
   		exp = params[:experiment]
-  		@ph = PHPoint.where(experiment: exp).last
-  		@eh = EHPoint.where(experiment: exp).last
+  		@temp = TPoint.where(experiment: exp).last
   		haml :experiment
   	end
 
@@ -39,10 +33,9 @@ class Application < Sinatra::Base
 
   		content_type :json
   		exp = params[:experiment]
-  		ph_data = PHPoint.where(experiment: exp).order_by(time: "desc")
-  		eh_data = EHPoint.where(experiment: exp).order_by(time: "desc")
-
-  		h = {phdata: ph_data, ehdata: eh_data}.to_json
+  		t_data = TPoint.where(experiment: exp).order_by(time: "desc")
+  		
+  		h = {tdata: t_data}.to_json
 
   		return h
   	end
