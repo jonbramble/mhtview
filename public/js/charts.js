@@ -38,21 +38,6 @@ var opts = {
   left: 'auto' // Left position relative to parent in px
 };
 
-function show(message) {
-      $('p#message').replaceWith(message);
-}
-
-
-function socks(){
-
-        var ws       = new WebSocket('ws://' + window.location.host + window.location.pathname);
-        ws.onopen    = function(m)  { show('websocket opened' +  m.data); };
-        ws.onclose   = function()  { show('websocket closed'); }
-        ws.onmessage = function(m) { show('websocket message: ' +  m.data); };
-}
-
-
-
 $(document).ready ( function() {
 
  var target = document.getElementById('chart-spinner');
