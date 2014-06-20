@@ -54,7 +54,7 @@ $( "#show-charts" ).bind( "click", function() {
   $.getJSON( url )
    .done(function( jsondata) {
      $.each ( jsondata.tdata, function(i, point) {
-       var tarr = {x: new Date(point.time), y: parseFloat(point.temperature)};
+       var tarr = {x: new Date(point.time), y: parseFloat(point.temp)};
        tpoints.push(tarr);
      });
 
