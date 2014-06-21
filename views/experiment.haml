@@ -1,14 +1,27 @@
-%h3
-  %p
-    %b
-      Temperature
-  %p
-    = @temp.temp
-  %p
-    = @temp.time
+.row
+  %h3
+    %p
+      %b
+        Temperature
+    %p
+      = @temp.temp
+      &degC
+    %p
+      = @temp.time
 
-%button#show-charts.btn.btn-lg.btn-success
-  Show Charts
+.row
+  %button#show-charts.btn.btn-lg.btn-success
+    Show Chart
 
-#chart-spinner
-#tchartContainer{ :style => "height: 300px; width: 70%;" }
+  %button#show-data.btn.btn-lg.btn-success
+    Show Data
+
+.row
+  #data-view
+
+.row
+  #chart-spinner
+  #chart-view
+    #tchartContainer{ :style => "height: 300px; width: 70%;" }
+
+

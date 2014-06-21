@@ -47,6 +47,9 @@ $( "#show-charts" ).bind( "click", function() {
   var exp = $(location).attr('pathname').match(/\/experiment\/(.*)/)[1];
   var url = "/experiment/"+exp+"/data.json";
 
+  $( "#chart-view").show();
+  $( "#data-view").hide();
+
   var spinner = new Spinner(opts).spin(target);
   
   var tpoints = new Array();
