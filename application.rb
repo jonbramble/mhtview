@@ -1,7 +1,27 @@
 require 'sinatra'
 require 'mongoid'
 require 'haml'
-require_relative 'data_file'
+
+
+class TPoint
+  include Mongoid::Document
+  field :time
+  field :experiment
+  field :temp
+  store_in session: "default"
+end
+
+class DataFile
+  include Mongoid::Document
+  field :time, type: DateTime
+  field :ambient
+  field :temp
+  field :experiment
+  store_in session: "default"
+end
+
+class DPoint < DataFile
+end
 
 Mongoid.load!("mongoid.yml",:production)
 
