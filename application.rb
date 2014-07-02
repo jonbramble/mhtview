@@ -13,8 +13,13 @@ class TPoint
 	store_in session: "default"
 end
 
-class T2Point < TPoint
-	field :ambient
+class DPoint
+        include Mongoid::Document
+  	field :time, type: DateTime
+  	field :ambient
+  	field :temp
+	field :experiment
+	store_in session: "default"
 end
 
 
@@ -35,26 +40,25 @@ class Application < Sinatra::Base
 
 	get '/tunafish/:experiment' do
   		exp = params[:experiment]
-  		@temp = T2Point.where(experiment: exp).last
+  		@temp = DPoint.where(experiment: exp).last
   		haml :tunafish
   	end
 
-	get '/tunafish/:experiment/data.json' do
 
+  	get '/experiment/:experiment/data.json' do
   		content_type :json
   		exp = params[:experiment]
-  		t_data = T2Point.where(experiment: exp).order_by(time: "desc")
+  		t_data = TPoint.where(experiment: exp).order_by(time: "desc")
   		
   		h = {tdata: t_data}.to_json
 
   		return h
   	end
 
-  	get '/experiment/:experiment/data.json' do
-
+	get '/tunafish/:experiment/data.json' do
   		content_type :json
   		exp = params[:experiment]
-  		t_data = TPoint.where(experiment: exp).order_by(time: "desc")
+  		t_data = DPoint.where(experiment: exp).order_by(time: "desc")
   		
   		h = {tdata: t_data}.to_json
 
