@@ -4,7 +4,7 @@
       %b
         Temperature
     %p
-      = @temp.temperature
+      = @temp.temp
       &degC
     %p
       %b
@@ -13,21 +13,24 @@
       = @temp.ambient
       &degC
     %p
+      %b
+        Time
       = @temp.time
 
 .row
-  %button#show-charts.btn.btn-lg.btn-success
+  %button#advanced-show-charts.btn.btn-lg.btn-success
     Show Chart
 
-  %button#show-data.btn.btn-lg.btn-success
+  %button#advanced-show-data.btn.btn-lg.btn-success
     Show Data
 
 .row
-  #data-view
+  #advanced-data-view
 
 .row
   #chart-spinner
-  #chart-view
-    #tchartContainer{ :style => "height: 300px; width: 70%;" }
-
+  #advanced-chart-view
+    #temperature-tchartContainer{ :style => "height: 300px; width: 70%;" }
+    #ambient-tchartContainer{ :style => "height: 300px; width: 70%;" }
+    #difference-tchartContainer{ :style => "height: 300px; width: 70%;" }
 

@@ -38,12 +38,12 @@ var opts = {
   left: 'auto' // Left position relative to parent in px
 };
 
-$(document).ready ( function() {
 
- var target = document.getElementById('chart-spinner');
- //socks();
+function basic_chart(){
+  var target = document.getElementById('chart-spinner');
+  //socks();
 
-$( "#show-charts" ).bind( "click", function() {
+  $( "#show-charts" ).bind( "click", function() {
   var exp = $(location).attr('pathname').match(/\/experiment\/(.*)/)[1];
   var url = "/experiment/"+exp+"/data.json";
 
@@ -70,10 +70,53 @@ $( "#show-charts" ).bind( "click", function() {
 
 });
 
+}
 
 
+function advanced_chart(){
+  var target = document.getElementById('chart-spinner');
+  //socks();
 
+  $( "#advanced-show-charts" ).bind( "click", function() {
+  var exp = $(location).attr('pathname').match(/\/tunafish\/(.*)/)[1];
+  var url = "/tunafish/"+exp+"/data.json";
+
+  $( "#advanced-chart-view").show();
+  $( "#advanced-data-view").hide();
+
+  var spinner = new Spinner(opts).spin(target);
+  
+  var tpoints = new Array();
+  var apoints = new Array();
+  var dpoints = new Array();
  
+  $.getJSON( url )
+   .done(function( jsondata) {
+     $.each ( jsondata.tdata, function(i, point) {
+       var tarr = {x: new Date(point.time), y: parseFloat(point.temp)};
+       var aarr = {x: new Date(point.time), y: parseFloat(point.ambient)};
+       var darr = {x: new Date(point.time), y: parseFloat(point.temp-point.ambient)};
+       tpoints.push(tarr);
+       apoints.push(aarr);
+       dpoints.push(darr);
+     });
+
+    plotchart("temperature-tchartContainer","Sample Temperature", tpoints);
+    plotchart("ambient-tchartContainer","Ambient", apoints);
+    plotchart("difference-tchartContainer","Temperature Difference", dpoints);
+ 
+    spinner.stop();
+
+   });
+
+
+});
+
+  }
+
+$(document).ready ( function() {
+  basic_chart();
+  advanced_chart();
 });
 
 

@@ -1,27 +1,9 @@
 require 'sinatra'
-require 'sinatra-websocket'
 require 'mongoid'
 require 'haml'
+require_relative 'data_file'
 
 Mongoid.load!("mongoid.yml",:production)
-
-class TPoint
-	include Mongoid::Document
-	field :time
-	field :experiment
-	field :temperature
-	store_in session: "default"
-end
-
-class DPoint
-        include Mongoid::Document
-  	field :time, type: DateTime
-  	field :ambient
-  	field :temp
-	field :experiment
-	store_in session: "default"
-end
-
 
 class Application < Sinatra::Base	
 	set :haml, :format => :html5
