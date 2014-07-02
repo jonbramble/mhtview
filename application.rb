@@ -2,7 +2,6 @@ require 'sinatra'
 require 'mongoid'
 require 'haml'
 
-
 class TPoint
   include Mongoid::Document
   field :time
@@ -14,9 +13,9 @@ end
 class DataFile
   include Mongoid::Document
   field :time, type: DateTime
-  field :ambient
-  field :temp
-  field :experiment
+  field :ambient, type: String
+  field :temp, type: String
+  field :experiment, type: String
   store_in session: "default"
 end
 
