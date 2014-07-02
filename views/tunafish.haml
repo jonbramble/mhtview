@@ -1,0 +1,33 @@
+.row
+  %h3
+    %p
+      %b
+        Temperature
+    %p
+      = @temp.inspect
+      &degC
+    %p
+      %b
+        Ambient Temperature
+    %p
+      =# @temp.ambient
+      &degC
+    %p
+      =# @temp.time
+
+.row
+  %button#show-charts.btn.btn-lg.btn-success
+    Show Chart
+
+  %button#show-data.btn.btn-lg.btn-success
+    Show Data
+
+.row
+  #data-view
+
+.row
+  #chart-spinner
+  #chart-view
+    #tchartContainer{ :style => "height: 300px; width: 70%;" }
+
+
