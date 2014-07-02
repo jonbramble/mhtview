@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra-websocket'
 require 'mongoid'
 require 'haml'
 
@@ -65,4 +66,29 @@ class Application < Sinatra::Base
 
   		return h
   	end
+
+  get '/test' do
+    if !request.websocket?
+      haml :test
+    else
+      request.websocket do |ws|
+        ws.onopen do
+          #ws.send("Hello World!")
+          settings.sockets << ws
+        end
+        ws.onmessage do |msg|
+          #EM.next_tick { settings.sockets.each{|s| s.send(msg) } }
+          EM::PeriodicTimer.new(5) do 
+            settings.sockets.each{|s| s.send(Time.now.to_s) }
+          end
+        end
+        ws.onclose do
+          warn("websocket closed")
+          settings.sockets.delete(ws)
+        end
+      end
+    end
+
   end
+
+end
