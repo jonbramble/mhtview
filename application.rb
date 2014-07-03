@@ -73,13 +73,13 @@ class Application < Sinatra::Base
     else
       request.websocket do |ws|
         ws.onopen do
-          #ws.send("Hello World!")
+          warn("websocket open")
           settings.sockets << ws
         end
         ws.onmessage do |msg|
           #EM.next_tick { settings.sockets.each{|s| s.send(msg) } }
           EM::PeriodicTimer.new(5) do 
-            settings.sockets.each{|s| s.send(Time.now.to_s) }
+            settings.sockets.each{|s| s.send( DPoint.last.temp.to_s ) }
           end
         end
         ws.onclose do
