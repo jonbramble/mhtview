@@ -32,7 +32,7 @@ function waitForSocketConnection(socket, callback){
 
 
 function socket(){
-  var ws = new WebSocket('ws://' + window.location.host + window.location.pathname);
+  var ws = new WebSocket('wss://' + window.location.host + window.location.pathname);
   ws.onopen = function () {flash_message("Websocket Open"); }
   ws.onclose = function () {flash_message("Websocket Closed"); }
   ws.onmessage = function (m) { temp_data(m.data); }
