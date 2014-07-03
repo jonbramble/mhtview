@@ -1,6 +1,6 @@
 function flash_message(msg){
   $("#msgs").hide();
-  $("#msgs").html(msg);
+  $("#msgs").html("<h3>"+msg+"</h3>");
   $("#msgs").fadeIn("slow");
   $("#msgs").fadeOut("slow");
 }

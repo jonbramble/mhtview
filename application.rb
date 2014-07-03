@@ -67,9 +67,9 @@ class Application < Sinatra::Base
   		return h
   	end
 
-  get '/test' do
+  get '/latest' do
     if !request.websocket?
-      haml :test
+      haml :latest
     else
       request.websocket do |ws|
         ws.onopen do
