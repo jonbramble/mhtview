@@ -1,2 +1,6 @@
-%h3 
- ph view
+%h3
+  Temperature DataView
+
+%p 
+  %a{href: "http://polarbear.herokuapp.com/tunafish/"+@exp_name } Latest Experimental Results
+

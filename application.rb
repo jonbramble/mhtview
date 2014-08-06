@@ -31,7 +31,9 @@ class Application < Sinatra::Base
 	set :sockets, []
 
 	get '/' do
+		@exp_name = DPoint.last.experiment.to_s
   		haml :index
+		
   	end
 
   	get '/experiment/:experiment' do
@@ -69,7 +71,7 @@ class Application < Sinatra::Base
 
   get '/latest' do
     if !request.websocket?
-      haml :latest
+      haml :latest	  	
     else
       request.websocket do |ws|
         ws.onopen do
